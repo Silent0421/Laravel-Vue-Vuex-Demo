@@ -1,0 +1,10 @@
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Ads board</h1>
+        <p class="lead text-muted">Almost OLX board</p>
+        <p>
+            <a href="#" class="btn btn-sm btn-primary">Main action</a>
+            <a href="#" class="btn btn-sm btn-secondary">Secondary action</a>
+        </p>
+    </div>
+</section>

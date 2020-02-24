@@ -18,10 +18,10 @@ class AdController extends Controller
     public function getAds() {
         $ads = $this->adService->getAds();
 
-        return response()->json($ads);
+        return view('index', ['ads' => $ads]);
     }
 
-    public function getAdd(int $id) {
+    public function getAd(int $id) {
         $ad = $this->adService->getAd($id);
 
         return response()->json($ad);

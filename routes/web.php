@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'ads');
 
 Route::get('ads', 'AdController@getAds')->name('getAds');
 Route::get('ads/{id}', 'AdController@getAd')->name('getAd');
