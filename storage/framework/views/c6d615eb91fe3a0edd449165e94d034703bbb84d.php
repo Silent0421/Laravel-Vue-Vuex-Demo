@@ -7,7 +7,11 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+
+        <link href="<?php echo e(asset('css/bootstrap.min.css')); ?>" rel="stylesheet">
+
+
+
 
         <!-- Styles -->
         <style>
@@ -64,6 +68,7 @@
         </style>
     </head>
     <body>
+    <a class="btn btn-primary">fdfdfdfdfdf</a>
         <div class="flex-center position-ref full-height">
             <?php if(Route::has('login')): ?>
                 <div class="top-right links">

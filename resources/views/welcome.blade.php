@@ -7,7 +7,11 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+{{--        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">--}}
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+{{--        <link href="{{ asset('js/jquery-3.4.1.slim.min.js') }}" rel="javascript">--}}
+{{--        <link href="{{ asset('js/popper.min.js') }}" rel="javascript">--}}
+{{--        <link href="{{ asset('js/bootstrap.min.js') }}" rel="javascript">--}}
 
         <!-- Styles -->
         <style>
@@ -64,6 +68,7 @@
         </style>
     </head>
     <body>
+    <a class="btn btn-primary">fdfdfdfdfdf</a>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
