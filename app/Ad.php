@@ -11,7 +11,9 @@ class Ad extends Model
         'description',
         'price',
         'amount',
-        'state'
+        'state',
+        'category_id',
+        'sub_category_id'
     ];
 
     public function category() {

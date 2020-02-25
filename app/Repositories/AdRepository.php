@@ -8,34 +8,29 @@ use App\Ad;
 
 class AdRepository
 {
-    private $adModel;
-
-    public function __construct(Ad $adModel)
-    {
-        $this->adModel = $adModel;
-    }
-
     public function getAds() {
-        return $this->adModel->all();
+        return Ad::with(['category', 'subCategory'])->get();
     }
 
     public function getAd(int $id) {
-        return $this->adModel->find($id);
+        return Ad::find($id);
     }
 
-    public function createAd(Ad $ad) {
+    public function createAd(array $attributes) {
+        $ad = Ad::create($attributes);
         $ad->save();
         return $ad;
     }
 
-    public function updateAd(Ad $ad) {
-        $adInstance = $this->adModel->find($ad->id);
+    public function updateAd(array $attributes) {
+        $adInstance = Ad::find($attributes['id']);
+        $adInstance->fill($attributes);
         $adInstance->save();
-        return $ad;
+        return $adInstance;
     }
 
     public function deleteAd(int $id) {
-        $ad = $this->adModel->find($id);
+        $ad = Ad::find($id);
         $ad->delete();
     }
 }

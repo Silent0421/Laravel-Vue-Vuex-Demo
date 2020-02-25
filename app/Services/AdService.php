@@ -3,8 +3,6 @@
 
 namespace App\Services;
 
-
-use App\Ad;
 use App\Repositories\AdRepository;
 
 class AdService
@@ -24,14 +22,12 @@ class AdService
         return $this->adRepository->getAd($id);
     }
 
-    public function createAd(Ad $ad) {
-        $this->adRepository->createAd($ad);
-        return $ad;
+    public function createAd(array $attributes) {
+        return $this->adRepository->createAd($attributes);
     }
 
-    public function updateAd(Ad $ad) {
-        $this->adRepository->updateAd($ad);
-        return $ad;
+    public function updateAd(array $attributes) {
+        return $this->adRepository->updateAd($attributes);
     }
 
     public function deleteAd(int $id) {
