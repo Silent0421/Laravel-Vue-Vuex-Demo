@@ -8,12 +8,10 @@ use App\Ad;
 
 class AdRepository
 {
-<<<<<<< HEAD
     /**
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-=======
->>>>>>> origin/master
+
     public function getAds() {
         return Ad::with(['category', 'subCategory'])->get();
     }
@@ -26,26 +24,20 @@ class AdRepository
         return Ad::find($id);
     }
 
-<<<<<<< HEAD
     /**
      * @param array $attributes
      * @return mixed
      */
-=======
->>>>>>> origin/master
     public function createAd(array $attributes) {
         $ad = Ad::create($attributes);
         $ad->save();
         return $ad;
     }
 
-<<<<<<< HEAD
     /**
      * @param array $attributes
      * @return mixed
      */
-=======
->>>>>>> origin/master
     public function updateAd(array $attributes) {
         $adInstance = Ad::find($attributes['id']);
         $adInstance->fill($attributes);

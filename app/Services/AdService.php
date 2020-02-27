@@ -36,24 +36,20 @@ class AdService
         return $this->adRepository->getAd($id);
     }
 
-<<<<<<< HEAD
     /**
      * @param array $attributes
      * @return mixed
      */
-=======
->>>>>>> origin/master
+
     public function createAd(array $attributes) {
         return $this->adRepository->createAd($attributes);
     }
 
-<<<<<<< HEAD
     /**
      * @param array $attributes
      * @return mixed
      */
-=======
->>>>>>> origin/master
+
     public function updateAd(array $attributes) {
         return $this->adRepository->updateAd($attributes);
     }

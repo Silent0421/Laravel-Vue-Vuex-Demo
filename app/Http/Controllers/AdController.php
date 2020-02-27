@@ -7,12 +7,8 @@ use App\Http\Requests\DeleteAd;
 use App\Services\AdService;
 use App\Services\CategoryService;
 use App\Services\SubCategoryService;
-<<<<<<< HEAD
+
 use Illuminate\Http\Response;
-=======
-use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Integer;
->>>>>>> origin/master
 
 class AdController extends Controller
 {
@@ -20,10 +16,7 @@ class AdController extends Controller
      * @var AdService
      */
     private $adService;
-    private $categoryService;
-    private $subCategoryService;
 
-<<<<<<< HEAD
     /**
      * AdController constructor.
      * @param AdService $adService
@@ -31,14 +24,6 @@ class AdController extends Controller
     public function __construct(AdService $adService)
     {
         $this->adService = $adService;
-        $response = Response::class;
-=======
-    public function __construct(AdService $adService, CategoryService $categoryService, SubCategoryService $subCategoryService)
-    {
-        $this->adService = $adService;
-        $this->categoryService = $categoryService;
-        $this->subCategoryService = $subCategoryService;
->>>>>>> origin/master
     }
 
     /**
@@ -60,31 +45,22 @@ class AdController extends Controller
         return response()->json($ad);
     }
 
-<<<<<<< HEAD
     /**
      * @param CategoryService $categoryService
      * @param null $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showCreateEditForm(CategoryService $categoryService, $id = null) {
-=======
-    public function showCreateEditForm($id = null) {
->>>>>>> origin/master
         $ad = null;
         if($id) {
             $ad = $this->adService->getAd($id);
         }
 
-<<<<<<< HEAD
         $categories = $categoryService->getCategories();
-=======
-        $categories = $this->categoryService->getCategories();
->>>>>>> origin/master
 
         return view('create', ['categories' => $categories, 'ad' => $ad]);
     }
 
-<<<<<<< HEAD
     /**
      * @param CreateEditAd $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -122,28 +98,6 @@ class AdController extends Controller
      */
     public function deleteAd(DeleteAd $request) {
         $this->adService->deleteAd($request->get('id'));
-=======
-    public function createAd(Request $request) {
-        //validate
-        $this->adService->createAd($request->request->all());
-
-        return redirect(route('getAds'));
-    }
-
-    public function getSubCategories(int $id) {
-        return response()->json($this->subCategoryService->getSubcategoriesByCategoryId($id));
-    }
-
-    public function updateAd(Request $request) {
-        //validate
-        $this->adService->updateAd($request->request->all());
-
-        return redirect(route('getAds'));
-    }
-
-    public function deleteAd($id) {
-        $this->adService->deleteAd($id);
->>>>>>> origin/master
 
         return redirect(route('getAds'));
     }
