@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateEditAd;
+use App\Http\Requests\DeleteAd;
 use App\Services\AdService;
 use App\Services\CategoryService;
 use App\Services\SubCategoryService;
@@ -66,9 +67,9 @@ class AdController extends Controller
      */
     public function createAd(CreateEditAd $request) {
 
-        $this->adService->createAd($request->request->all());
+         $this->adService->createAd($request->request->all());
 
-        return redirect(route('getAds'));
+         return redirect(route('getAds'));
     }
 
     /**
@@ -92,11 +93,11 @@ class AdController extends Controller
     }
 
     /**
-     * @param $id
+     * @param DeleteAd $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function deleteAd($id) {
-        $this->adService->deleteAd($id);
+    public function deleteAd(DeleteAd $request) {
+        $this->adService->deleteAd($request->get('id'));
 
         return redirect(route('getAds'));
     }

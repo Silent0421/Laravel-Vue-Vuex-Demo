@@ -4,6 +4,9 @@
         <h2>@if($ad) Edit ad @else Create Ad @endif</h2>
         <div class="row">
             <div class="col-6">
+                @error('id')
+                <div class="alert alert-danger mt-1">{{ $message }}</div>
+                @enderror
             <form action="@if(!$ad){{route('createAd')}}@else{{route('updateAd', $ad->id)}}@endif" method="post">
                 @csrf
                 @if($ad)

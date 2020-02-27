@@ -6,7 +6,7 @@
             <div class="alert alert-danger">{{$message}}</div>
             @enderror
             <div class="d-flex justify-content-between mb-2">
-                <h4 class="text-body">Ads List</h4>
+                <h4 class="text-body">{{\Illuminate\Support\Facades\Auth::user()->name}}'s Ads List</h4>
                 <a href="{{route('showCreateEditForm')}}" class="btn btn-sm btn-primary mb-2">New ad</a>
             </div>
             <div class="row text-body mb-3">
@@ -35,7 +35,7 @@
                     <p>Actions</p>
                 </div>
             </div>
-            @if(count($ads) === 0)<div class="col-12 alert alert-info text-center">No Records</div>@endif
+            @if(count($ads) === 0)<div class="col-12 alert alert-/ads/create/1info text-center">No Records</div>@endif
             @foreach($ads as $key => $ad)
                 <div class="row text-body">
                     <div class="col-1">
@@ -73,6 +73,6 @@
                 </div>
             @endforeach
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ex diam, sodales at consequat id, viverra ut dolor. In eget orci sit amet magna sagittis mattis sit amet sed augue. Vivamus facilisis libero ligula, vel sodales ipsum sollicitudin id. Duis vitae urna rutrum, dignissim arcu ac, elementum augue.</p>
-            </div>
         </div>
+    </div>
 @endsection

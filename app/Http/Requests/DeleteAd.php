@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class CreateEditAd extends FormRequest
+class DeleteAd extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +23,8 @@ class CreateEditAd extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'title' => 'required|between:3,50',
-            'description' => 'required',
-            'state' => Rule::in(['bad', 'average', 'good', 'excellent']),
-            'price' => 'numeric',
+        return [
+            'id' => 'exists:ads,id'
         ];
-
-        if($this->has('id')) {
-            $rules += ['id' => 'exists:ads,id'];
-        }
-
-        return $rules;
     }
 }
