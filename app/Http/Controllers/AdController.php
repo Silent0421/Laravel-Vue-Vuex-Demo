@@ -7,7 +7,7 @@ use App\Http\Requests\DeleteAd;
 use App\Services\AdService;
 use App\Services\CategoryService;
 use App\Services\SubCategoryService;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AdController extends Controller
 {
@@ -29,6 +29,7 @@ class AdController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getAds() {
+
         $ads = $this->adService->getAds();
 
         return view('index', ['ads' => $ads]);
@@ -66,9 +67,11 @@ class AdController extends Controller
      */
     public function createAd(CreateEditAd $request) {
 
-         $this->adService->createAd($request->request->all());
+        $attributes = $request->request->all();
+        $attributes += ['user_id' => Auth::id()];
+         $this->adService->createAd($attributes);
 
-         return redirect(route('getAds'));
+         return redirect(route('getUserAds', Auth::id()));
     }
 
     /**
@@ -88,7 +91,7 @@ class AdController extends Controller
 
         $this->adService->updateAd($request->request->all());
 
-        return redirect(route('getAds'));
+        return redirect(route('getUserAds', Auth::id()));
     }
 
     /**
@@ -98,6 +101,17 @@ class AdController extends Controller
     public function deleteAd(DeleteAd $request) {
         $this->adService->deleteAd($request->get('id'));
 
-        return redirect(route('getAds'));
+        return redirect(route('getUserAds', Auth::id()));
+    }
+
+    /**
+     * @param int $userId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUserAds(int $userId) {
+
+        $ads = $this->adService->getUserAds($userId);
+
+        return view('userAds', ['ads' => $ads]);
     }
 }

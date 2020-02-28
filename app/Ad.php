@@ -16,7 +16,8 @@ class Ad extends Model
         'amount',
         'state',
         'category_id',
-        'sub_category_id'
+        'sub_category_id',
+        'user_id'
     ];
 
     /**

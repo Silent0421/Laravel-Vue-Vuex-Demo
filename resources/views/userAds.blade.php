@@ -35,7 +35,7 @@
                     <p>Actions</p>
                 </div>
             </div>
-            @if(count($ads) === 0)<div class="col-12 alert alert-/ads/create/1info text-center">No Records</div>@endif
+            @if(count($ads) === 0)<div class="col-12 alert alert-info text-center">No Records</div>@endif
             @foreach($ads as $key => $ad)
                 <div class="row text-body">
                     <div class="col-1">
@@ -67,7 +67,7 @@
                             @method('DELETE')
                             @csrf
                             <input type="hidden" name="id" value="{{$ad->id}}">
-                            <p><button type="submit" style="color: #ff0000" class="btn btn-link pt-0">Delete</button></p>
+                            <p><button type="submit" class="btn btn-link danger-text pt-0">Delete</button></p>
                         </form>
                     </div>
                 </div>

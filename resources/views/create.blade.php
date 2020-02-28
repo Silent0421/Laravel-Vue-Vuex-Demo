@@ -11,8 +11,9 @@
                 @csrf
                 @if($ad)
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{$ad->id}}">
+                    <input type="hidden" name="id" value="22">
                 @endif
+                <input type="hidden" name="user_id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input class="form-control" id="title" type="text" name="title" @if($ad) value="{{$ad->title}} @endif">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\AdOwner;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -32,7 +33,8 @@ class CreateEditAd extends FormRequest
         ];
 
         if($this->has('id')) {
-            $rules += ['id' => 'exists:ads,id'];
+//            $rules += ['id' => 'exists:ads,id'];
+            $rules += ['id' => new AdOwner()];
         }
 
         return $rules;

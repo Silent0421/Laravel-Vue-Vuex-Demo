@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::redirect('/', 'ads');
-
 Route::get('ads', 'AdController@getAds')->name('getAds');
-Route::get('ads/create/{id?}', 'AdController@showCreateEditForm')->name('showCreateEditForm');
+Auth::routes();
+
+
+Route::group(['middleware' => 'auth', 'prefix' => 'ads'], function() {
+    Route::get('create/{id?}', 'AdController@showCreateEditForm')->name('showCreateEditForm');
+    Route::post('/', 'AdController@createAd')->name('createAd');
+    Route::put('/{id}', 'AdController@updateAd')->name('updateAd');
+    Route::delete('/{id}', 'AdController@deleteAd')->name('deleteAd');
+    Route::get('subcategories/{id}', 'AdController@getSubCategories')->name('getSubCategories');
+    Route::get('user/{userId}', 'AdController@getUserAds')->name('getUserAds');
+});
+
 Route::get('ads/{id}', 'AdController@getAd')->name('getAd');
-Route::post('ads', 'AdController@createAd')->name('createAd');
-Route::put('ads/{id}', 'AdController@updateAd')->name('updateAd');
-Route::delete('ads/{id}', 'AdController@deleteAd')->name('deleteAd');
-Route::get('ads/subcategories/{id}', 'AdController@getSubCategories')->name('getSubCategories');
