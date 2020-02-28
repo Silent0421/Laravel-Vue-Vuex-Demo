@@ -23,7 +23,6 @@ class AdController extends Controller
     public function __construct(AdService $adService)
     {
         $this->adService = $adService;
-        $response = Response::class;
     }
 
     /**
