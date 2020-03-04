@@ -2,7 +2,6 @@ import HomeComponent from "./Home";
 
 export default {
     registerRoutes(routes) {
-        console.log(routes)
         routes.children.push(
             {
                 path: 'home',
@@ -11,6 +10,5 @@ export default {
                 children: []
             }
         )
-        console.log(routes)
     }
 }

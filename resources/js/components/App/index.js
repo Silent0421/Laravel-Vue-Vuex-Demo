@@ -13,9 +13,8 @@ export default {
             children: []
         };
         HomeComponent.registerRoutes(appRoutes);
-        console.log(routes);
         routes.push(appRoutes);
-
+        console.log(routes)
     },
     config() {
         return {
