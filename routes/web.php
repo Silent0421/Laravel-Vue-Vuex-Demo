@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::redirect('/', 'ads');
+//Route::redirect('/', 'ads');
+
+Route::get('/', function() {return view('app');});
+
 Route::get('ads', 'AdController@getAds')->name('getAds');
-Auth::routes();
+Route::group(['prefix' =>'test'], function() {
+    Auth::routes();
+});
+
 
 
 Route::group(['middleware' => 'auth', 'prefix' => 'ads'], function() {
@@ -29,3 +35,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'ads'], function() {
 });
 
 Route::get('ads/{id}', 'AdController@getAd')->name('getAd');
+
+Route::get('/home', 'HomeController@index')->name('home');
