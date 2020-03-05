@@ -7,15 +7,17 @@
 import './bootstrap';
 import Vue from 'vue'
 import MainComponent from './components/MainComponent';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import LoginComponent from './components/Login';
 import RegisterComponent from './components/Register';
+import WelcomeComponent from './components/Welcome'
 import AppComponent from "./components/App";
 import vModal from 'vue-js-modal';
 import VueMaterial from "vue-material";
 import 'vue-material/dist/vue-material.min.css';
-import 'vue-material/dist/theme/default.css'
+import 'vue-material/dist/theme/default.css';
 import VeeValidate from 'vee-validate';
+import 'vue-material-design-icons/styles.css';
 
 window.Vue = Vue;
 
@@ -24,9 +26,10 @@ let routes = [];
 LoginComponent.registerRoutes(routes);
 RegisterComponent.registerRoutes(routes);
 AppComponent.registerRoutes(routes);
+WelcomeComponent.registerRoutes(routes);
 
-routes.push({ path: '/', redirect: '/login' });
-// routes.push({ path: '/*', redirect: '/' });
+routes.push({ path: '/', redirect: '/welcome' });
+routes.push({ path: '/*', redirect: '/' });
 
 /**
  * creating vue-router instance

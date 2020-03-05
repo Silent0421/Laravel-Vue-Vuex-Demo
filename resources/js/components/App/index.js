@@ -14,7 +14,6 @@ export default {
         };
         HomeComponent.registerRoutes(appRoutes);
         routes.push(appRoutes);
-        console.log(routes)
     },
     config() {
         return {
