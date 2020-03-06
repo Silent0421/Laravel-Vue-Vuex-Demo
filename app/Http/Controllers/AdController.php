@@ -26,13 +26,15 @@ class AdController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getAds() {
 
         $ads = $this->adService->getAds();
 
-        return view('index', ['ads' => $ads]);
+//        return view('index', ['ads' => $ads]);
+
+        return response()->json($ads);
     }
 
     /**
@@ -106,12 +108,13 @@ class AdController extends Controller
 
     /**
      * @param int $userId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getUserAds(int $userId) {
 
         $ads = $this->adService->getUserAds($userId);
 
-        return view('userAds', ['ads' => $ads]);
+//        return view('userAds', ['ads' => $ads]);
+        return response()->json($ads);
     }
 }

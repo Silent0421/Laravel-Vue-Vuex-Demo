@@ -17,13 +17,9 @@ use Illuminate\Support\Facades\Auth;
 //Route::redirect('/', 'ads');
 
 Route::get('/', function() {return view('app');});
-
 Route::get('ads', 'AdController@getAds')->name('getAds');
-Route::group(['prefix' =>'test'], function() {
-    Auth::routes();
-});
 
-
+Auth::routes();
 
 Route::group(['middleware' => 'auth', 'prefix' => 'ads'], function() {
     Route::get('create/{id?}', 'AdController@showCreateEditForm')->name('showCreateEditForm');
@@ -33,7 +29,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'ads'], function() {
     Route::get('subcategories/{id}', 'AdController@getSubCategories')->name('getSubCategories');
     Route::get('user/{userId}', 'AdController@getUserAds')->name('getUserAds');
 });
-
 Route::get('ads/{id}', 'AdController@getAd')->name('getAd');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -78,6 +78,8 @@
 
 <script>
     import RegisterComponent from '../Register';
+    import Auth from '../../services/auth';
+    import AppComponent from "../App/App";
 
     export default {
         data() {
@@ -99,7 +101,18 @@
         },
         methods: {
             submit() {
-
+                if (!this.validate()) return;
+                Auth.login(this.email, this.password).then(
+                    () => {
+                        console.log(Auth.getUser())
+                        this.$router.push(AppComponent.config().redirectPath);
+                    },
+                    (x) => {
+                        debugger
+                        // location.reload();
+                        this.$set(this, 'backendErrors', x);
+                    }
+                );
             },
             recovery() {
 
@@ -113,7 +126,14 @@
                     || this.backendErrors.password
                 )
             }
-        }
+        },
+        beforeRouteEnter(to, from, next) {
+            if(Auth.getUser()) {
+                next(AppComponent.config().redirectPath)
+            } else {
+                next()
+            }
+        },
     }
 </script>
 

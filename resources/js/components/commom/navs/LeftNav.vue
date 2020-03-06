@@ -6,10 +6,10 @@
 
         <md-list>
             <md-list-item>
-                <span class="md-list-item-text">My Ads</span>
+                <router-link v-if="authorized" class="md-list-item-link" :to="'/app/home'">My Ads</router-link>
             </md-list-item>
             <md-list-item>
-                <span class="md-list-item-text">All Ads</span>
+                <router-link class="md-list-item-link" :to="'welcome'">All Ads</router-link>
             </md-list-item>
         </md-list>
     </md-drawer>
@@ -20,9 +20,10 @@
         data() {
             return {
                 showNavigation: false,
+                // authorized: true
             }
         },
-        props: ['show'],
+        props: ['show', 'authorized'],
         watch: {
             show(val) {
                 this.showNavigation = val;
@@ -32,6 +33,9 @@
             }
         },
         methods: {
+            getAds() {
+                this.$emit('get-ads')
+            }
         }
     }
 </script>

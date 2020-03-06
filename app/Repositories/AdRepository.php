@@ -57,6 +57,6 @@ class AdRepository
      * @return mixed
      */
     public function getUserAds(int $userId) {
-        return Ad::where('user_id', $userId)->get();
+        return Ad::where('user_id', $userId)->with(['category', 'subcategory'])->get();
     }
 }

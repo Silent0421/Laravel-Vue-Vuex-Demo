@@ -5,38 +5,40 @@
         </md-toolbar>
 
         <md-list>
-            <md-list-item>
+            <md-list-item v-if="!authorized">
                 <md-button class="md-icon-button">
                     <md-icon class="md-primary">log_in</md-icon>
                 </md-button>
-                <span class="md-list-item-text" @click="alert('df')">Login</span>
+                <router-link class="md-list-item-text" :to="'/login'">Login</router-link>
             </md-list-item>
 
-            <md-list-item>
+            <md-list-item v-if="!authorized">
                 <md-button class="md-icon-button">
                     <md-icon class="md-primary">person_add</md-icon>
                 </md-button>
-                <span class="md-list-item-text">Register</span>
+                <router-link class="md-list-item-text" :to="'/register'">Register</router-link>
             </md-list-item>
 
-            <md-list-item>
+            <md-list-item v-if="authorized">
                 <md-button class="md-icon-button">
                     <md-icon class="md-primary">logout</md-icon>
                 </md-button>
-                <span class="md-list-item-text">Logout</span>
+                <span class="md-list-item-text" @click="logout($event)">Logout</span>
             </md-list-item>
         </md-list>
     </md-drawer>
 </template>
 
 <script>
+    import auth from "../../../services/auth";
+
     export default {
         data() {
             return {
                 showNavigation: false,
             }
         },
-        props: ['show'],
+        props: ['show', 'authorized'],
         watch: {
             show(val) {
                 this.showNavigation = val;
@@ -46,6 +48,11 @@
             }
         },
         methods: {
+            logout(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                auth.logout();
+            }
         }
     }
 </script>

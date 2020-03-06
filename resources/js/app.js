@@ -5,12 +5,12 @@
  */
 
 import './bootstrap';
-import Vue from 'vue'
+import Vue from 'vue';
 import MainComponent from './components/MainComponent';
 import VueRouter from 'vue-router';
 import LoginComponent from './components/Login';
 import RegisterComponent from './components/Register';
-import WelcomeComponent from './components/Welcome'
+import WelcomeComponent from './components/Welcome';
 import AppComponent from "./components/App";
 import vModal from 'vue-js-modal';
 import VueMaterial from "vue-material";
@@ -37,7 +37,6 @@ routes.push({ path: '/*', redirect: '/' });
  */
 const router = new VueRouter({
     routes,
-    // mode: 'history'
 });
 
 /**
