@@ -20,7 +20,6 @@
         data() {
             return {
                 showNavigation: false,
-                // authorized: true
             }
         },
         props: ['show', 'authorized'],

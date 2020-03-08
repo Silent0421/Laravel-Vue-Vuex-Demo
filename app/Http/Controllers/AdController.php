@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateEditAd;
-use App\Http\Requests\DeleteAd;
+use App\Http\Requests\CreateEditAdRequest;
+use App\Http\Requests\DeleteAdRequest;
 use App\Services\AdService;
 use App\Services\CategoryService;
 use App\Services\SubCategoryService;
@@ -31,8 +31,6 @@ class AdController extends Controller
     public function getAds() {
 
         $ads = $this->adService->getAds();
-
-//        return view('index', ['ads' => $ads]);
 
         return response()->json($ads);
     }
@@ -64,10 +62,10 @@ class AdController extends Controller
     }
 
     /**
-     * @param CreateEditAd $request
+     * @param CreateEditAdRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function createAd(CreateEditAd $request) {
+    public function createAd(CreateEditAdRequest $request) {
 
         $attributes = $request->request->all();
         $attributes += ['user_id' => Auth::id()];
@@ -86,10 +84,10 @@ class AdController extends Controller
     }
 
     /**
-     * @param CreateEditAd $request
+     * @param CreateEditAdRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function updateAd(CreateEditAd $request) {
+    public function updateAd(CreateEditAdRequest $request) {
 
         $this->adService->updateAd($request->request->all());
 
@@ -97,10 +95,10 @@ class AdController extends Controller
     }
 
     /**
-     * @param DeleteAd $request
+     * @param DeleteAdRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function deleteAd(DeleteAd $request) {
+    public function deleteAd(DeleteAdRequest $request) {
         $this->adService->deleteAd($request->get('id'));
 
         return redirect(route('getUserAds', Auth::id()));
@@ -114,7 +112,6 @@ class AdController extends Controller
 
         $ads = $this->adService->getUserAds($userId);
 
-//        return view('userAds', ['ads' => $ads]);
         return response()->json($ads);
     }
 }

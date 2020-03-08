@@ -1,10 +1,10 @@
 <template>
     <div class="page-container md-layout-column">
-        <toolbar @left="showNavigation = true" @right="showSidepanel = true"></toolbar>
-        <left-nav :show.sync="showNavigation" :authorized="isLoggedIn"></left-nav>
-        <right-nav :show.sync="showSidepanel" :authorized="isLoggedIn"></right-nav>
+        <toolbar @left="showNavigation = true" @right="showSidepanel = true"/>
+        <left-nav :show.sync="showNavigation" :authorized="isLoggedIn"/>
+        <right-nav :show.sync="showSidepanel" :authorized="isLoggedIn"/>
         <md-content>
-            <ad-list :type="'Welcome'"></ad-list>
+            <ad-list :type="'Welcome'"/>
         </md-content>
     </div>
 </template>

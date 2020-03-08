@@ -14,8 +14,8 @@ class Auth {
 
     getUserFromApi() {
         return new Promise((resolve, reject) => {
-            Api.call('/api/user', 'get').then(res => {
-                resolve(res.data)
+            Api.call('/api/auth/user', 'get').then(res => {
+                resolve(res.data.user)
             },
                 reject)
         })
@@ -39,15 +39,45 @@ class Auth {
         return this.user;
     }
 
+    setToken(token) {
+        localStorage.setItem('authorization', 'Bearer ' + token);
+        return token;
+    }
+
+    getToken() {
+        return localStorage.getItem('authorization')
+    }
+
     login(email, password) {
         return new Promise((resolve, reject) => {
-            window.axios.post('/login', {'email':email, 'password': password}).then((res) => {
-                debugger
+            window.axios.post('/api/auth/login', {'email':email, 'password': password}).then((res) => {
                 localStorage.clear();
-                location.reload();
-                this.setUser(res.data);
-                EventBus.$emit('login:success', res.data);
-                resolve(res.data);
+                // location.reload();
+                this.setUser(res.data.user);
+                this.setToken(res.headers.authorization);
+                EventBus.$emit('login:success', res.data.user);
+                resolve(res.data.user);
+            }, (x) => {
+                reject(x.response.data);
+            })
+        })
+    }
+
+    register(name, email, password, confirmPassword) {
+        return new Promise((resolve, reject) => {
+            window.axios.post(
+                '/api/auth/register',
+                {
+                    'name': name,
+                    'email':email,
+                    'password': password,
+                    'password_confirmation': confirmPassword
+                }).then((res) => {
+                    localStorage.clear();
+                    location.reload();
+                    this.setUser(res.data.user);
+                    EventBus.$emit('login:success', res.data.user);
+                    resolve(res.data.user);
             }, (x) => {
                 reject(x.response.data);
             })
@@ -55,8 +85,15 @@ class Auth {
     }
 
     logout() {
-        localStorage.clear();
-        window.location.reload();
+        return new Promise((resolve, reject) => {
+            window.axios.post('/api/auth/logout').then((res) => {
+                localStorage.clear();
+                location.reload();
+                resolve(res.data)
+            }, (x) => {
+                reject(x.response.data);
+            })
+        })
     }
 
     check() {

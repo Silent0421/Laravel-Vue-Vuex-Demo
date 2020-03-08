@@ -63,7 +63,7 @@ class AdService
      * @param int $userId
      * @return mixed
      */
-    public function getuserAds(int $userId) {
+    public function getUserAds(int $userId) {
 
         return $this->adRepository->getUserAds($userId);
     }

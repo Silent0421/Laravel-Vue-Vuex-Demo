@@ -36,6 +36,7 @@
 
 <script>
     import Api from '../../../services/api'
+    import Auth from '../../../services/auth'
 
     export default {
         name: "AdList",
@@ -46,9 +47,9 @@
         },
         props: ['type'],
         async mounted() {
-            const url = (this.type === 'Home') ? 'api/ads/user/' + 3 : 'api/ads';
+            const user = await Auth.getUser();
+            const url = (this.type === 'Home') ? 'api/ads/user/' + user.id : 'api/ads';
             this.ads = await Api.call(url, 'get');
-            console.log(this.ads.data);
         }
     }
 </script>

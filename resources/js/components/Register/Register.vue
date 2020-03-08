@@ -11,6 +11,9 @@
             <div class="caption">
                 Register
             </div>
+            <span v-show="backendErrors.error" class="common-error">
+                <strong>{{backendErrors.name}}</strong>
+            </span>
             <form novalidate @submit.stop.prevent="submit" @keyup.enter="submit">
                 <md-field md-theme="default"
                           :class="{'md-invalid': backendErrors.name || $validator.errors.has('name')}">
@@ -91,7 +94,7 @@
                 email: '',
                 password: '',
                 confirmPassword: '',
-                backendErrors: [],
+                backendErrors: {},
                 LoginComponent
             }
         },
@@ -105,7 +108,25 @@
         },
         methods: {
             submit() {
-
+                if (!this.validate()) return;
+                Auth.register(this.name, this.email, this.password, this.confirmPassword).then(
+                    () => {
+                        this.$router.push(AppComponent.config().redirectPath);
+                    },
+                    (x) => {
+                        if (x.errors?.name) {
+                            this.$set(this.backendErrors, 'name', x.errors.name[0]);
+                        } else if (x.errors?.email) {
+                            this.$set(this.backendErrors, 'password', x.errors.email[0]);
+                        } else if (x.errors?.password) {
+                            this.$set(this.backendErrors, 'password', x.errors.password[0]);
+                        } else if (x.errors?.confirmPassword) {
+                            this.$set(this.backendErrors, 'confirmPassword', x.errors.confirmPassword[0]);
+                        }else {
+                            this.$set(this.backendErrors, 'error', x.error);
+                        }
+                    }
+                );
             },
             validate() {
                 return !(
@@ -119,13 +140,26 @@
             }
         },
         beforeRouteEnter(to, from, next) {
-            next(AppComponent.config().redirectPath);
             if(Auth.getUser()) {
                 next(AppComponent.config().redirectPath)
             } else {
                 next()
             }
         },
+        watch: {
+            name() {
+                this.backendErrors = {}
+            },
+            email() {
+                this.backendErrors = {}
+            },
+            password() {
+                this.backendErrors = {}
+            },
+            confirmPassword() {
+                this.backendErrors = {}
+            }
+        }
     }
 </script>
 

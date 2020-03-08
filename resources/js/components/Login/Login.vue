@@ -8,10 +8,12 @@
                     {{RegisterComponent.config().name}}
                 </router-link>
             </div>
-<!--            <logo src="logo-1x.png"></logo>-->
             <div class="caption">
                 Login
             </div>
+            <span v-show="backendErrors.error" class="common-error">
+                <strong>{{backendErrors.error}}</strong>
+            </span>
             <form v-if="!recoveryStatus" novalidate @submit.stop.prevent="submit" @keyup.enter="submit">
                 <md-field md-theme="default"
                                     :class="{'md-invalid': backendErrors.email || $validator.errors.has('email')}">
@@ -79,7 +81,7 @@
 <script>
     import RegisterComponent from '../Register';
     import Auth from '../../services/auth';
-    import AppComponent from "../App/App";
+    import AppComponent from "../App";
 
     export default {
         data() {
@@ -88,7 +90,8 @@
                 password: '',
                 backendErrors: {},
                 recoveryStatus: false,
-                RegisterComponent
+                RegisterComponent,
+                AppComponent
             }
         },
         computed: {
@@ -104,13 +107,16 @@
                 if (!this.validate()) return;
                 Auth.login(this.email, this.password).then(
                     () => {
-                        console.log(Auth.getUser())
                         this.$router.push(AppComponent.config().redirectPath);
                     },
                     (x) => {
-                        debugger
-                        // location.reload();
-                        this.$set(this, 'backendErrors', x);
+                        if (x.errors?.email) {
+                            this.$set(this.backendErrors, 'password', x.errors.email[0]);
+                        } else if (x.errors?.password) {
+                            this.$set(this.backendErrors, 'password', x.errors.password[0]);
+                        } else {
+                            this.$set(this.backendErrors, 'error', x.error);
+                        }
                     }
                 );
             },
@@ -127,6 +133,14 @@
                 )
             }
         },
+        watch: {
+            email() {
+                this.backendErrors = {};
+            },
+            password() {
+                this.backendErrors = {};
+            }
+        },
         beforeRouteEnter(to, from, next) {
             if(Auth.getUser()) {
                 next(AppComponent.config().redirectPath)
@@ -138,6 +152,10 @@
 </script>
 
 <style lang="scss">
+    .common-error {
+        color:red;
+    }
+
     .modal-login.v--modal-overlay.scrollable {
         padding-bottom: 50px;
     }

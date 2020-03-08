@@ -31,6 +31,7 @@
 
 <script>
     import auth from "../../../services/auth";
+    // import Welcome from "../../Welcome";
 
     export default {
         data() {
@@ -52,6 +53,7 @@
                 e.preventDefault();
                 e.stopPropagation();
                 auth.logout();
+                this.$router.push('/welcome')
             }
         }
     }
