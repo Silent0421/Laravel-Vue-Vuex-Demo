@@ -74,6 +74,17 @@ class AdController extends Controller
          return redirect(route('getUserAds', Auth::id()));
     }
 
+
+    /**
+     * @param CategoryService $categoryService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCategories(CategoryService $categoryService) {
+        $categories = $categoryService->getCategories();
+
+        return response()->json($categories);
+    }
+
     /**
      * @param SubCategoryService $subCategoryService
      * @param int $id

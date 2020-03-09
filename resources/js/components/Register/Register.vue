@@ -19,7 +19,7 @@
                           :class="{'md-invalid': backendErrors.name || $validator.errors.has('name')}">
 
                     <label class="input-label md-body-1">NAME</label>
-                    <md-input v-validate="'required'" data-vv-name="name" v-model="name"></md-input>
+                    <md-input v-validate="'required'" data-vv-name="name" v-model="name"/>
 
                     <span v-show="backendErrors.name" class="md-error">
                         <strong>{{backendErrors.name}}</strong>
@@ -34,7 +34,7 @@
                           :class="{'md-invalid': backendErrors.email || $validator.errors.has('email')}">
 
                     <label class="input-label md-body-1">EMAIL ADDRESS</label>
-                    <md-input v-validate="'required|email'" data-vv-name="email" v-model="email"></md-input>
+                    <md-input v-validate="'required|email'" data-vv-name="email" v-model="email"/>
 
                     <span v-show="backendErrors.email" class="md-error">
                         <strong>{{backendErrors.email}}</strong>
@@ -117,7 +117,7 @@
                         if (x.errors?.name) {
                             this.$set(this.backendErrors, 'name', x.errors.name[0]);
                         } else if (x.errors?.email) {
-                            this.$set(this.backendErrors, 'password', x.errors.email[0]);
+                            this.$set(this.backendErrors, 'email', x.errors.email[0]);
                         } else if (x.errors?.password) {
                             this.$set(this.backendErrors, 'password', x.errors.password[0]);
                         } else if (x.errors?.confirmPassword) {

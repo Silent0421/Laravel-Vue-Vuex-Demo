@@ -21,13 +21,15 @@ Route::prefix('auth')->group(function() {
  */
 Route::prefix('ads')->group(function() {
     Route::get('/', 'AdController@getAds');
-    Route::get('/{id}', 'AdController@getAd');
 
     Route::middleware('auth:api')->group(function() {
         Route::get('/user/{id}', 'AdController@getUserAds');
         Route::post('/', 'AdController@createAd');
-        Route::put('/{id}', 'AdController@updateAd')->name('updateAd');
-        Route::delete('/{id}', 'AdController@deleteAd')->name('deleteAd');
+        Route::put('/{id}', 'AdController@updateAd');
+        Route::delete('/{id}', 'AdController@deleteAd');
+        Route::get('categories', 'AdController@getCategories');
         Route::get('subcategories/{id}', 'AdController@getSubCategories');
     });
+
+//    Route::get('/{id}', 'AdController@getAd');
 });

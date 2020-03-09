@@ -11,7 +11,7 @@
                 <md-table-head>Price</md-table-head>
             </md-table-row>
 
-            <md-table-row v-for="(ad, index) in this.ads.data" :key="ad.id">
+            <md-table-row v-for="(ad, index) in this.ads" :key="ad.id" @click="selectAd(ad)">
                 <md-table-cell md-numeric>{{index + 1}}</md-table-cell>
                 <md-table-cell>{{ad.title}}</md-table-cell>
                 <md-table-cell>{{ad.description}}</md-table-cell>
@@ -20,23 +20,24 @@
                 <md-table-cell>{{ad.state}}</md-table-cell>
                 <md-table-cell>{{ad.price}}</md-table-cell>
                 <md-table-cell v-if="type === 'Home'">
-                    <md-button class="md-icon-button md-primary">
+                    <md-button class="md-icon-button md-primary" @click="updateAd(ad)">
                         <md-icon>edit</md-icon>
                     </md-button>
                 </md-table-cell>
                 <md-table-cell v-if="type === 'Home'">
-                    <md-button class="md-icon-button md-accent">
+                    <md-button class="md-icon-button md-accent" @click="deleteAd(ad)">
                         <md-icon>delete</md-icon>
                     </md-button>
                 </md-table-cell>
             </md-table-row>
         </md-table>
+        <md-button class="md-primary md-right" @click="createAd()" v-if="type === 'Home'">Create ad</md-button>
     </div>
 </template>
 
 <script>
-    import Api from '../../../services/api'
-    import Auth from '../../../services/auth'
+    import Ad from '../../../services/ad';
+    import Auth from '../../../services/auth';
 
     export default {
         name: "AdList",
@@ -47,9 +48,31 @@
         },
         props: ['type'],
         async mounted() {
-            const user = await Auth.getUser();
-            const url = (this.type === 'Home') ? 'api/ads/user/' + user.id : 'api/ads';
-            this.ads = await Api.call(url, 'get');
+            try {
+                const user = await Auth.getUser();
+                this.ads = (this.type === 'Home') ?
+                    await Ad.getUserAds(user.id) :
+                    await Ad.getAllAds();
+            } catch (e) {
+                console.log(e);
+                this.ads = [];
+            }
+        },
+        methods: {
+            showAd(ad) {
+                this.$emit('showAd', ad)
+            },
+            updateAd(ad) {
+                this.$emit('updateAd', ad)
+            },
+            createAd() {
+                this.$emit('createAd')
+            },
+            deleteAd(ad) {
+                Ad.deleteAd(ad.id).then(() => {
+                    this.ads = this.ads.filter((item) => ad.id !== item.id)
+                })
+            }
         }
     }
 </script>

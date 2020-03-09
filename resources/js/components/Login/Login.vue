@@ -19,7 +19,7 @@
                                     :class="{'md-invalid': backendErrors.email || $validator.errors.has('email')}">
 
                     <label class="input-label md-body-1">EMAIL ADDRESS</label>
-                    <md-input v-validate="'required|email'" data-vv-name="email" v-model="email"></md-input>
+                    <md-input v-validate="'required|email'" data-vv-name="email" v-model="email"/>
 
                     <span v-show="backendErrors.email" class="md-error">
                         <strong>{{backendErrors.email}}</strong>
@@ -54,7 +54,8 @@
                                     :class="{'md-invalid': backendErrors.email || $validator.errors.has('email')}">
 
                     <label class="input-label md-body-1">EMAIL ADDRESS</label>
-                    <md-input v-validate="'required|email'" data-vv-name="email" v-model="email"></md-input>
+
+                    <md-input v-validate="'required|email'" data-vv-name="email" v-model="email"/>
 
                     <span v-show="backendErrors.email" class="md-error">
                         <strong>{{backendErrors.email}}</strong>

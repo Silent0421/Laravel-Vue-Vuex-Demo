@@ -52,7 +52,7 @@ class Auth {
         return new Promise((resolve, reject) => {
             window.axios.post('/api/auth/login', {'email':email, 'password': password}).then((res) => {
                 localStorage.clear();
-                // location.reload();
+                location.reload();
                 this.setUser(res.data.user);
                 this.setToken(res.headers.authorization);
                 EventBus.$emit('login:success', res.data.user);
@@ -76,6 +76,7 @@ class Auth {
                     localStorage.clear();
                     location.reload();
                     this.setUser(res.data.user);
+                    this.setToken(res.headers.authorization);
                     EventBus.$emit('login:success', res.data.user);
                     resolve(res.data.user);
             }, (x) => {

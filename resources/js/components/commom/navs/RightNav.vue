@@ -23,7 +23,7 @@
                 <md-button class="md-icon-button">
                     <md-icon class="md-primary">logout</md-icon>
                 </md-button>
-                <span class="md-list-item-text" @click="logout($event)">Logout</span>
+                <span class="md-list-item-text" @click="logout($event)"><a>Logout</a></span>
             </md-list-item>
         </md-list>
     </md-drawer>
@@ -31,7 +31,6 @@
 
 <script>
     import auth from "../../../services/auth";
-    // import Welcome from "../../Welcome";
 
     export default {
         data() {

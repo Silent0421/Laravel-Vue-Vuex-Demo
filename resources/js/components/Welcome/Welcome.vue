@@ -1,11 +1,12 @@
 <template>
     <div class="page-container md-layout-column">
-        <toolbar @left="showNavigation = true" @right="showSidepanel = true"/>
+        <toolbar :type="'Welcome'" @left="showNavigation = true" @right="showSidepanel = true"/>
         <left-nav :show.sync="showNavigation" :authorized="isLoggedIn"/>
         <right-nav :show.sync="showSidepanel" :authorized="isLoggedIn"/>
         <md-content>
-            <ad-list :type="'Welcome'"/>
+            <ad-list :type="'Welcome'" @showAd="showAd($event)"/>
         </md-content>
+        <ad-modal :type="'show'" :ad="ad"/>
     </div>
 </template>
 
@@ -15,6 +16,7 @@
     import RightNav from "../commom/navs/RightNav";
     import AdList from "../commom/adList/AdList";
     import auth from "../../services/auth";
+    import AdModal from '../commom/adModal/adModal';
 
     export default {
         name: "Welcome",
@@ -22,13 +24,21 @@
             Toolbar,
             LeftNav,
             RightNav,
-            AdList
+            AdList,
+            AdModal
         },
         data() {
             return {
                 showNavigation: false,
                 showSidepanel: false,
-                isLoggedIn: auth.check()
+                isLoggedIn: auth.check(),
+                ad: {}
+            }
+        },
+        methods: {
+            showAd(event) {
+                this.ad = event;
+                this.$modal.show('adModal')
             }
         }
     }
