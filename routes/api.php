@@ -31,5 +31,5 @@ Route::prefix('ads')->group(function() {
         Route::get('subcategories/{id}', 'AdController@getSubCategories');
     });
 
-//    Route::get('/{id}', 'AdController@getAd');
+    Route::get('/{id}', 'AdController@getAd');
 });

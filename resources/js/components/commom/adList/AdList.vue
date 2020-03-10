@@ -11,7 +11,7 @@
                 <md-table-head>Price</md-table-head>
             </md-table-row>
 
-            <md-table-row v-for="(ad, index) in this.ads" :key="ad.id" @click="selectAd(ad)">
+            <md-table-row v-for="(ad, index) in this.ads" :key="ad.id" @click="showAd(ad)">
                 <md-table-cell md-numeric>{{index + 1}}</md-table-cell>
                 <md-table-cell>{{ad.title}}</md-table-cell>
                 <md-table-cell>{{ad.description}}</md-table-cell>
@@ -20,12 +20,12 @@
                 <md-table-cell>{{ad.state}}</md-table-cell>
                 <md-table-cell>{{ad.price}}</md-table-cell>
                 <md-table-cell v-if="type === 'Home'">
-                    <md-button class="md-icon-button md-primary" @click="updateAd(ad)">
+                    <md-button class="md-icon-button md-primary" @click.stop.prevent="updateAd(ad)">
                         <md-icon>edit</md-icon>
                     </md-button>
                 </md-table-cell>
                 <md-table-cell v-if="type === 'Home'">
-                    <md-button class="md-icon-button md-accent" @click="deleteAd(ad)">
+                    <md-button class="md-icon-button md-accent" @click.stop.prevent="deleteAd(ad)">
                         <md-icon>delete</md-icon>
                     </md-button>
                 </md-table-cell>
@@ -46,7 +46,7 @@
                 ads: [],
             }
         },
-        props: ['type'],
+        props: ['type', 'ad'],
         async mounted() {
             try {
                 const user = await Auth.getUser();
@@ -72,6 +72,16 @@
                 Ad.deleteAd(ad.id).then(() => {
                     this.ads = this.ads.filter((item) => ad.id !== item.id)
                 })
+            }
+        },
+        watch: {
+            ad(val) {
+                if (!val.id) {
+                    this.ads.push(val);
+                } else {
+                    const index = this.ads.indexOf(this.ads.find(ad => ad.id === val.id));
+                    this.$set(this.ads, index, val)
+                }
             }
         }
     }

@@ -43,7 +43,7 @@ class Ad {
 
     deleteAd(id) {
         return new Promise((resolve, reject) => {
-            Api.call('/api/ads/' + id, 'delete').then(res => {
+            Api.call('/api/ads/' + id, 'delete', {}, {id: id}).then(res => {
                 resolve(res.data)
             }, (x) => {
                 reject(x.response.data)
@@ -61,7 +61,7 @@ class Ad {
         })
     }
 
-    getSubcategories(id) {
+    getSubCategories(id) {
         return new Promise((resolve, reject) => {
             Api.call('/api/ads/subcategories/' + id, 'get').then(res => {
                 resolve(res.data)

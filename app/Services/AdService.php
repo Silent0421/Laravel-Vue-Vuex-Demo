@@ -54,9 +54,10 @@ class AdService
 
     /**
      * @param int $id
+     * @return mixed
      */
     public function deleteAd(int $id) {
-        $this->adRepository->deleteAd($id);
+        return $this->adRepository->deleteAd($id);
     }
 
     /**

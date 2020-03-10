@@ -7,6 +7,7 @@ use App\Http\Requests\DeleteAdRequest;
 use App\Services\AdService;
 use App\Services\CategoryService;
 use App\Services\SubCategoryService;
+use http\Env\Response;
 use Illuminate\Support\Facades\Auth;
 
 class AdController extends Controller
@@ -63,15 +64,15 @@ class AdController extends Controller
 
     /**
      * @param CreateEditAdRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\JsonResponse
      */
     public function createAd(CreateEditAdRequest $request) {
 
         $attributes = $request->request->all();
         $attributes += ['user_id' => Auth::id()];
-         $this->adService->createAd($attributes);
+        $ad = $this->adService->createAd($attributes);
 
-         return redirect(route('getUserAds', Auth::id()));
+         return response()->json($ad);
     }
 
 
@@ -96,23 +97,23 @@ class AdController extends Controller
 
     /**
      * @param CreateEditAdRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateAd(CreateEditAdRequest $request) {
 
-        $this->adService->updateAd($request->request->all());
+        $ad = $this->adService->updateAd($request->request->all());
 
-        return redirect(route('getUserAds', Auth::id()));
+        return response()->json($ad);
     }
 
     /**
      * @param DeleteAdRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\JsonResponse
      */
     public function deleteAd(DeleteAdRequest $request) {
-        $this->adService->deleteAd($request->get('id'));
+        $ad = $this->adService->deleteAd($request->get('id'));
 
-        return redirect(route('getUserAds', Auth::id()));
+        return response()->json($ad);
     }
 
     /**

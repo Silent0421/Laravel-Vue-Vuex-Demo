@@ -46,10 +46,12 @@ class AdRepository
 
     /**
      * @param int $id
+     * @return mixed
      */
     public function deleteAd(int $id) {
         $ad = Ad::find($id);
         $ad->delete();
+        return $ad;
     }
 
     /**

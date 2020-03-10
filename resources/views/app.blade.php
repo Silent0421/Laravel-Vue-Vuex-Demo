@@ -51,6 +51,5 @@
     }
 </script>
 <script src="//{{ Request::getHost() }}/js/app.js?v=1.4.12"></script>
-{{--<script src="https://chatwee-api.com/v2/script/5aa665d1bd616df3696d0ae8.js"></script>--}}
 </body>
 </html>

@@ -33,7 +33,6 @@ class CreateEditAdRequest extends FormRequest
         ];
 
         if($this->has('id')) {
-//            $rules += ['id' => 'exists:ads,id'];
             $rules += ['id' => new AdOwner()];
         }
 

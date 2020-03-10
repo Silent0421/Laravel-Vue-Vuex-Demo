@@ -4,13 +4,13 @@
         <left-nav :show.sync="showNavigation" :authorized="isLoggedIn"/>
         <right-nav :show.sync="showSidepanel" :authorized="isLoggedIn"/>
         <md-content>
-            <ad-list :type="'Home'"
-                     @showAd="showAd(ad)"
+            <ad-list :type="'Home'" :ad="newAd"
+                     @showAd="showAd($event)"
                      @createAd="createAd()"
-                     @updateAd="updateAd(ad)"
+                     @updateAd="updateAd($event)"
             />
         </md-content>
-        <ad-modal :type="type" :ad="ad"/>
+        <ad-modal :type="type" :ad="ad" @created="created($event)" @updated="updated($event)"/>
     </div>
 </template>
 
@@ -37,6 +37,7 @@
                 showSidepanel: false,
                 isLoggedIn: auth.check(),
                 ad: {},
+                newAd: {},
                 type: 'show'
             }
         },
@@ -54,6 +55,13 @@
                 this.ad = ad;
                 this.type = 'update';
                 this.$modal.show('adModal')
+            },
+            created(ad) {
+                this.newAd = ad;
+                console.log(this.ad)
+            },
+            updated(ad) {
+                this.newAd = ad;
             }
         }
     }

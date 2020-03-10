@@ -7,7 +7,7 @@
                 Create Ad
             </div>
             <div class="caption" v-else>
-                Create Ad
+                Update Ad
             </div>
             <span v-show="backendErrors.error" class="common-error">
                 <strong>{{backendErrors.name}}</strong>
@@ -41,6 +41,22 @@
                         <strong>{{ $validator.errors.first('description') }}</strong>
                     </span>
 
+                </md-field>
+
+                <md-field md-theme="default"
+                          :class="{'md-invalid': backendErrors.category || $validator.errors.has('category')}">
+                    <label class="input-label md-body-1" >Category</label>
+                    <md-select v-validate="'required'" data-vv-name="category" v-model="category" name="category" @md-selected="categorySelected($event)">
+                        <md-option v-for="category in categories" :key="category.id" :value="category.id">{{category.name}}</md-option>
+                    </md-select>
+                </md-field>
+
+                <md-field md-theme="default"
+                          :class="{'md-invalid': backendErrors.subCategory || $validator.errors.has('subCategory')}">
+                    <label class="input-label md-body-1">Sub Category</label>
+                    <md-select v-validate="'required'" data-vv-name="subCategory" v-model="subCategory" name="SubCategory">
+                        <md-option v-for="subCategory in subCategories" :key="subCategory.id" :value="subCategory.id">{{subCategory.name}}</md-option>
+                    </md-select>
                 </md-field>
 
                 <md-field md-theme="default"
@@ -79,6 +95,9 @@
             <md-button @click="submit()" :disabled="!validate()" class="btn" v-if="type === 'update'">
                 UPDATE
             </md-button>
+            <md-button @click="hide()" class="btn lower-back">
+                BACK
+            </md-button>
         </div>
         <div class="content" v-if="type === 'show'">
             <div class="caption">
@@ -107,7 +126,7 @@
             </md-button>
         </div>
     </modal>
-</template>
+</template>compTy
 
 <script>
     import Ad from '../../../services/ad';
@@ -120,8 +139,8 @@
                 description: '',
                 state: '',
                 price: '',
-                categoryId: 0,
-                subCategoryId: 0,
+                category: 0,
+                subCategory: 0,
                 backendErrors: {},
                 categories: [],
                 subCategories: [],
@@ -157,27 +176,49 @@
                     'description': this.description,
                     'state': this.state,
                     'price': this.price,
-                    'category_id': this.categoryId,
-                    'sub_category_id': this.subCategoryId
+                    'category_id': this.category,
+                    'sub_category_id': +this.subCategory !== 0 ? this.subCategory : null,
+                    'category': this.categories.find(cat => cat.id === +this.category),
+                    'sub_category': this.subCategories.find(cat => cat.id === +this.subCategory)
                 };
                 if (this.type === 'create') {
-                    Ad.createAd(ad).then((res) => {
-                        console.log(res)
+                    Ad.createAd(ad).then(() => {
+                        this.$emit('created', ad);
                     }).catch(e => {
                         console.log(e)
                     })
                 } else {
-                    Ad.updateAd(ad).then(() => {})
+                    Ad.updateAd(ad).then(() => {
+                        this.$emit('updated', ad);
+                    }).catch(e => {
+                        console.log(e)
+                    })
                 }
+                this.$emit('created', ad);
                 this.$modal.hide('adModal')
             },
             hide() {
                 this.$modal.hide('adModal')
+            },
+            async categorySelected(val) {
+                try {
+                    console.log(val)
+                    this.subCategories = await Ad.getSubCategories(val);
+                } catch(e) {
+                    console.log(e);
+                    this.subCategories = [];
+                }
             }
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss">
+    .md-menu-content.md-select-menu {
+        z-index: 1000!important;
+    }
 
+    .lower-back {
+        margin-top: 10px!important;
+    }
 </style>
