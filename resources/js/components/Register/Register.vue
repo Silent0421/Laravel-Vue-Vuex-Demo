@@ -116,13 +116,17 @@
                     (x) => {
                         if (x.errors?.name) {
                             this.$set(this.backendErrors, 'name', x.errors.name[0]);
-                        } else if (x.errors?.email) {
+                        }
+                        if (x.errors?.email) {
                             this.$set(this.backendErrors, 'email', x.errors.email[0]);
-                        } else if (x.errors?.password) {
+                        }
+                        if (x.errors?.password) {
                             this.$set(this.backendErrors, 'password', x.errors.password[0]);
-                        } else if (x.errors?.confirmPassword) {
+                        }
+                        if (x.errors?.confirmPassword) {
                             this.$set(this.backendErrors, 'confirmPassword', x.errors.confirmPassword[0]);
-                        }else {
+                        }
+                        if (!x.errors) {
                             this.$set(this.backendErrors, 'error', x.error);
                         }
                     }
