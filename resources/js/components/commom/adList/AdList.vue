@@ -10,7 +10,6 @@
                 <md-table-head>State</md-table-head>
                 <md-table-head>Price</md-table-head>
             </md-table-row>
-
             <md-table-row v-for="(ad, index) in this.ads" :key="ad.id" @click="showAd(ad)">
                 <md-table-cell md-numeric>{{index + 1}}</md-table-cell>
                 <md-table-cell>{{ad.title}}</md-table-cell>
@@ -31,6 +30,12 @@
                 </md-table-cell>
             </md-table-row>
         </md-table>
+        <md-empty-state
+            v-if="showEmpty"
+            md-icon="devices_other"
+            md-label="No Ads"
+            md-description="There is no available ads. You can create a new one.">
+        </md-empty-state>
         <md-button class="md-primary md-right" @click="createAd()" v-if="type === 'Home'">Create ad</md-button>
     </div>
 </template>
@@ -44,9 +49,13 @@
         data() {
             return {
                 ads: [],
+                showEmpty: false
             }
         },
         props: ['type', 'ad'],
+        updated() {
+            this.ads.length === 0 ? this.showEmpty = true : this.showEmpty = false
+        },
         async mounted() {
             try {
                 const user = await Auth.getUser();
