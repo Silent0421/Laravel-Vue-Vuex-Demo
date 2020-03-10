@@ -238,6 +238,16 @@
             },
             price() {
                 this.backendErrors = {}
+            },
+            ad(val) {
+                this.title = val.title;
+                this.description = val.description;
+                this.state = val.state;
+                this.price = val.price;
+                this.category_id = val.category_id;
+                this.sub_category_id = val.sub_category_id;
+                this.category = val.category;
+                this.subCategory = val.subCategory;
             }
         }
     }
