@@ -206,18 +206,23 @@
                 this.$modal.hide('adModal')
             },
             updateBackendErrors(e) {
+
                 if (e.errors?.title) {
                     this.$set(this.backendErrors, 'title', e.errors.title[0]);
-                } else if (e.errors?.description) {
+                }
+                if (e.errors?.description) {
                     this.$set(this.backendErrors, 'description', e.errors.description[0]);
-                } else if (e.errors?.state) {
+                }
+                if (e.errors?.state) {
                     this.$set(this.backendErrors, 'state', e.errors.state[0]);
-                } else if (e.errors?.price[0]) {
+                }
+                if (e.errors?.price) {
                     this.$set(this.backendErrors, 'price', e.errors.price[0]);
-                }else {
+                }
+                if(!e.errors)
+                {
                     this.$set(this.backendErrors, 'error', e.error);
                 }
-                console.log(this.backendErrors)
             },
             categorySelected(val) {
                 this.subCategories = [];

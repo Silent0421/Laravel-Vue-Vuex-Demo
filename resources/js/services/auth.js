@@ -50,12 +50,9 @@ class Auth {
 
     login(email, password) {
         return new Promise((resolve, reject) => {
-            window.axios.post('/api/auth/login', {'email':email, 'password': password}).then((res) => {
-                localStorage.clear();
-                location.reload();
-                this.setUser(res.data.user);
-                this.setToken(res.headers.authorization);
-                EventBus.$emit('login:success', res.data.user);
+            window.axios.post('/api/auth/login', {'email':email, 'password': password
+            }).then((res) => {
+                this.loginRegisterStoreData(res);
                 resolve(res.data.user);
             }, (x) => {
                 reject(x.response.data);
@@ -73,16 +70,20 @@ class Auth {
                     'password': password,
                     'password_confirmation': confirmPassword
                 }).then((res) => {
-                    localStorage.clear();
-                    location.reload();
-                    this.setUser(res.data.user);
-                    this.setToken(res.headers.authorization);
-                    EventBus.$emit('login:success', res.data.user);
+                    this.loginRegisterStoreData(res);
                     resolve(res.data.user);
             }, (x) => {
                 reject(x.response.data);
             })
         })
+    }
+
+    loginRegisterStoreData (res) {
+        localStorage.clear();
+        location.reload();
+        this.setUser(res.data.user);
+        this.setToken(res.headers.authorization);
+        EventBus.$emit('login:success', res.data.user);
     }
 
     logout() {

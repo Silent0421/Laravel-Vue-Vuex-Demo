@@ -21,6 +21,7 @@
     import AdList from "../../../commom/adList/AdList";
     import auth from "../../../../services/auth";
     import AdModal from '../../../commom/adModal/adModal';
+    import Welcome from "../../../Welcome";
 
     export default {
         name: 'Home',
@@ -62,6 +63,13 @@
             },
             updated(ad) {
                 this.newAd = ad;
+            }
+        },
+        beforeRouteEnter(to, from, next) {
+            if (!auth.check()) {
+                next(Welcome.config().redirectPath)
+            } else {
+                next()
             }
         }
     }
