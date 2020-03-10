@@ -32,7 +32,7 @@
                           :class="{'md-invalid': backendErrors.description || $validator.errors.has('description')}">
 
                     <label class="input-label md-body-1">Description</label>
-                    <md-input v-validate="'required|email'" data-vv-name="email" v-model="description"/>
+                    <md-input v-validate="'required'" data-vv-name="email" v-model="description"/>
 
                     <span v-show="backendErrors.description" class="md-error">
                         <strong>{{backendErrors.description}}</strong>
@@ -77,7 +77,7 @@
                 <md-field md-theme="default"
                           :class="{'md-invalid': backendErrors.price || $validator.errors.has('price')}">
                     <label class="input-label md-body-1">Price</label>
-                    <md-input v-validate="'required'" data-vv-name="price" data-vv-as="price"
+                    <md-input v-validate="'required'" data-vv-name="price"
                               autocomplete="off" v-model="price">
                     </md-input>
 
@@ -151,7 +151,6 @@
             try {
                 this.categories = await Ad.getCategories();
             } catch(e) {
-                console.log(e);
                 this.categories = [];
             }
         },
@@ -163,10 +162,15 @@
         methods: {
             validate() {
                 return !(
-                    !this.title
+                    this.$validator.errors.any()
+                    || !this.title
                     || !this.description
                     || !this.state
                     || !this.price
+                    || this.backendErrors.title
+                    || this.backendErrors.description
+                    || this.backendErrors.state
+                    || this.backendErrors.price
                 )
             },
             submit() {
@@ -184,30 +188,56 @@
                 if (this.type === 'create') {
                     Ad.createAd(ad).then(() => {
                         this.$emit('created', ad);
+                        this.$modal.hide('adModal')
                     }).catch(e => {
-                        console.log(e)
+                        this.updateBackendErrors(e)
                     })
                 } else {
                     Ad.updateAd(ad).then(() => {
                         this.$emit('updated', ad);
+                        this.$modal.hide('adModal')
                     }).catch(e => {
-                        console.log(e)
+                        this.updateBackendErrors(e)
                     })
                 }
-                this.$emit('created', ad);
-                this.$modal.hide('adModal')
             },
             hide() {
                 this.$modal.hide('adModal')
             },
+            updateBackendErrors(e) {
+                if (e.errors?.title) {
+                    this.$set(this.backendErrors, 'title', e.errors.title[0]);
+                } else if (e.errors?.description) {
+                    this.$set(this.backendErrors, 'description', e.errors.description[0]);
+                } else if (e.errors?.state) {
+                    this.$set(this.backendErrors, 'state', e.errors.state[0]);
+                } else if (e.errors?.price[0]) {
+                    this.$set(this.backendErrors, 'price', e.errors.price[0]);
+                }else {
+                    this.$set(this.backendErrors, 'error', e.error);
+                }
+                console.log(this.backendErrors)
+            },
             async categorySelected(val) {
                 try {
-                    console.log(val)
                     this.subCategories = await Ad.getSubCategories(val);
                 } catch(e) {
-                    console.log(e);
                     this.subCategories = [];
                 }
+            }
+        },
+        watch: {
+            title() {
+                this.backendErrors = {}
+            },
+            description() {
+                this.backendErrors = {}
+            },
+            state() {
+                this.backendErrors = {}
+            },
+            price() {
+                this.backendErrors = {}
             }
         }
     }
