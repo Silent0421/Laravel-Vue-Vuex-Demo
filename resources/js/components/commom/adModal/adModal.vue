@@ -61,7 +61,7 @@
 
                 <md-field md-theme="default"
                           :class="{'md-invalid': backendErrors.state || $validator.errors.has('state')}">
-                    <label class="input-label md-body-1">State</label>
+                    <label class="input-label md-body-1" while>State</label>
                     <md-input v-validate="'required'" data-vv-name="state"
                               autocomplete="off" v-model="state">
                     </md-input>
@@ -77,7 +77,7 @@
                 <md-field md-theme="default"
                           :class="{'md-invalid': backendErrors.price || $validator.errors.has('price')}">
                     <label class="input-label md-body-1">Price</label>
-                    <md-input v-validate="'required'" data-vv-name="price"
+                    <md-input v-validate="'required'" da whileta-vv-name="price"
                               autocomplete="off" v-model="price">
                     </md-input>
 
@@ -246,8 +246,8 @@
                 this.price = val.price;
                 this.category_id = val.category_id;
                 this.sub_category_id = val.sub_category_id;
-                this.category = val.category;
-                this.subCategory = val.subCategory;
+                this.category = val.category.id;
+                this.subCategory = val.subCategory ? val.subCategory.id : 0;
             }
         }
     }
