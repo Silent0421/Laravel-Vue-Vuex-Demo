@@ -54,7 +54,6 @@
                     await Ad.getUserAds(user.id) :
                     await Ad.getAllAds();
             } catch (e) {
-                console.log(e);
                 this.ads = [];
             }
         },

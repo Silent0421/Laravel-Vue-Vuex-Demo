@@ -147,12 +147,13 @@
             }
         },
         props: ['type', 'ad'],
-        async mounted() {
-            try {
-                this.categories = await Ad.getCategories();
-            } catch(e) {
-                this.categories = [];
-            }
+        mounted() {
+            this.categories = [];
+            Ad.getCategories().then(res => {
+                this.categories = res;
+            });
+
+
         },
         computed: {
             modalWidth() {
@@ -218,12 +219,11 @@
                 }
                 console.log(this.backendErrors)
             },
-            async categorySelected(val) {
-                try {
-                    this.subCategories = await Ad.getSubCategories(val);
-                } catch(e) {
-                    this.subCategories = [];
-                }
+            categorySelected(val) {
+                this.subCategories = [];
+                Ad.getSubCategories(val).then(res => {
+                    this.subCategories = res;
+                });
             }
         },
         watch: {
