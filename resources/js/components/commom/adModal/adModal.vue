@@ -247,7 +247,8 @@
                 this.category_id = val.category_id;
                 this.sub_category_id = val.sub_category_id;
                 this.category = val.category.id;
-                this.subCategory = val.subCategory ? val.subCategory.id : 0;
+                this.categorySelected(this.category);
+                this.subCategory = val.sub_category ? val.sub_category.id : 0;
             }
         }
     }
