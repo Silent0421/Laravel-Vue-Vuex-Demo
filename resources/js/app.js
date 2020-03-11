@@ -20,6 +20,7 @@ import 'vue-material/dist/theme/default.css';
 import VeeValidate from 'vee-validate';
 import 'vue-material-design-icons/styles.css';
 import vuexStore from "./vuexStore";
+import TestVuexComponent from "./components/TestVuex";
 
 window.Vue = Vue;
 
@@ -29,8 +30,9 @@ LoginComponent.registerRoutes(routes);
 RegisterComponent.registerRoutes(routes);
 AppComponent.registerRoutes(routes);
 WelcomeComponent.registerRoutes(routes);
+TestVuexComponent.registerRoutes(routes);
 
-routes.push({ path: '/', redirect: '/welcome' });
+routes.push({ path: '/', redirect: '/vuex' });
 routes.push({ path: '/*', redirect: '/' });
 
 /**

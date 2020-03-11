@@ -8,6 +8,9 @@ export default {
         },
         decrement(state) {
             state.count--
+        },
+        reset(state) {
+            state.count = 0
         }
     }
 }
