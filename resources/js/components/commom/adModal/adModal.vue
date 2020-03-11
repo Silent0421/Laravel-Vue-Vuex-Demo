@@ -243,16 +243,26 @@
                 this.backendErrors = {}
             },
             ad(val) {
-                if (_.isEmpty(val)) return;
-                this.title = val.title;
-                this.description = val.description;
-                this.state = val.state;
-                this.price = val.price;
-                this.category_id = val.category_id;
-                this.sub_category_id = val.sub_category_id;
-                this.category = val.category.id;
-                this.categorySelected(this.category);
-                this.subCategory = val.sub_category ? val.sub_category.id : 0;
+                if (_.isEmpty(val)) {
+                    this.title = '';
+                    this.description = '';
+                    this.state = '';
+                    this.price = '';
+                    this.category_id = 0;
+                    this.sub_category_id = 0;
+                    this.category = 0;
+                    this.subCategory = 0;
+                } else {
+                    this.title = val.title;
+                    this.description = val.description;
+                    this.state = val.state;
+                    this.price = val.price;
+                    this.category_id = val.category_id;
+                    this.sub_category_id = val.sub_category_id;
+                    this.category = val.category.id;
+                    this.categorySelected(this.category);
+                    this.subCategory = val.sub_category ? val.sub_category.id : 0;
+                }
             }
         }
     }
