@@ -17,6 +17,7 @@
     import AdList from "../commom/adList/AdList";
     import auth from "../../services/auth";
     import AdModal from '../commom/adModal/adModal';
+    import EventBus from "../../services/EventBus";
 
     export default {
         name: "Welcome",
@@ -34,6 +35,10 @@
                 isLoggedIn: auth.check(),
                 ad: {}
             }
+        },
+        mounted() {
+            EventBus.$on('login:success', () => { this.isLength = true} );
+            EventBus.$on('logout:success', () => { this.isLoggedIn = false} );
         },
         methods: {
             showAd(event) {

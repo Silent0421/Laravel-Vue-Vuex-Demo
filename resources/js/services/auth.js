@@ -1,5 +1,6 @@
 import Api from './api'
 import EventBus from './EventBus'
+import jwt_decode from 'jwt-decode'
 class Auth {
     constructor() {
         this.user = this.getUserFromStorage();
@@ -91,6 +92,7 @@ class Auth {
             window.axios.post('/api/auth/logout').then((res) => {
                 localStorage.clear();
                 location.reload();
+                EventBus.$emit('logout:success', res.data.user);
                 resolve(res.data)
             }, (x) => {
                 reject(x.response.data);
@@ -99,6 +101,12 @@ class Auth {
     }
 
     check() {
+        if (!!this.getUser()) {
+            const decodedToken = jwt_decode(this.getToken().split("Bearer ")[1]);
+            if (Date.now() > decodedToken.exp * 1000) {
+                this.logout();
+            }
+        }
         return !!this.getUser();
     }
 }

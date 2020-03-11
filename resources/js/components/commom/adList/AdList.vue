@@ -36,7 +36,11 @@
             md-label="No Ads"
             md-description="There is no available ads. You can create a new one.">
         </md-empty-state>
-        <md-button class="md-primary md-right" @click="createAd()" v-if="type === 'Home'">Create ad</md-button>
+        <md-toolbar md-elevation="0" class="md-dense white-toolbar">
+            <div class="md-toolbar-section-end">
+                <md-button class="md-raised md-primary" @click="createAd()" v-if="type === 'Home'">Create ad</md-button>
+            </div>
+        </md-toolbar>
     </div>
 </template>
 
@@ -96,5 +100,7 @@
 </script>
 
 <style lang="scss">
-
+    .white-toolbar {
+        background-color: #fff!important;
+    }
 </style>
