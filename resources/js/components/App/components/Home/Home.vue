@@ -10,7 +10,7 @@
                      @updateAd="updateAd($event)"
             />
         </md-content>
-        <ad-modal :type="type" :ad="ad" @created="created($event)" @updated="updated($event)"/>
+        <ad-modal :type="type" :ad="ad" @created_updated="createdUpdated($event)"/>
     </div>
 </template>
 
@@ -49,6 +49,7 @@
                 this.$modal.show('adModal')
             },
             createAd() {
+                this.ad = {};
                 this.type = 'create';
                 this.$modal.show('adModal')
             },
@@ -57,11 +58,7 @@
                 this.type = 'update';
                 this.$modal.show('adModal')
             },
-            created(ad) {
-                this.newAd = ad;
-                console.log(this.ad)
-            },
-            updated(ad) {
+            createdUpdated(ad) {
                 this.newAd = ad;
             }
         },

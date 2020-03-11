@@ -88,7 +88,8 @@
         },
         watch: {
             ad(val) {
-                if (!val.id) {
+                if (val.new_id) {
+                    val.id = val.new_id;
                     this.ads.push(val);
                 } else {
                     const index = this.ads.indexOf(this.ads.find(ad => ad.id === val.id));

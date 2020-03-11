@@ -61,7 +61,7 @@
 
                 <md-field md-theme="default"
                           :class="{'md-invalid': backendErrors.state || $validator.errors.has('state')}">
-                    <label class="input-label md-body-1" while>State</label>
+                    <label class="input-label md-body-1">State</label>
                     <md-input v-validate="'required'" data-vv-name="state"
                               autocomplete="off" v-model="state">
                     </md-input>
@@ -77,7 +77,7 @@
                 <md-field md-theme="default"
                           :class="{'md-invalid': backendErrors.price || $validator.errors.has('price')}">
                     <label class="input-label md-body-1">Price</label>
-                    <md-input v-validate="'required'" da whileta-vv-name="price"
+                    <md-input v-validate="'required'" data-vv-name="price"
                               autocomplete="off" v-model="price">
                     </md-input>
 
@@ -148,12 +148,9 @@
         },
         props: ['type', 'ad'],
         mounted() {
-            this.categories = [];
             Ad.getCategories().then(res => {
                 this.categories = res;
             });
-
-
         },
         computed: {
             modalWidth() {
@@ -187,15 +184,16 @@
                     'sub_category': this.subCategories.find(cat => cat.id === +this.subCategory)
                 };
                 if (this.type === 'create') {
-                    Ad.createAd(ad).then(() => {
-                        this.$emit('created', ad);
+                    Ad.createAd(ad).then((res) => {
+                        ad.new_id = res.id;
+                        this.$emit('created_updated', ad);
                         this.$modal.hide('adModal')
                     }).catch(e => {
                         this.updateBackendErrors(e)
                     })
                 } else {
                     Ad.updateAd(ad).then(() => {
-                        this.$emit('updated', ad);
+                        this.$emit('created_updated', ad);
                         this.$modal.hide('adModal')
                     }).catch(e => {
                         this.updateBackendErrors(e)
@@ -245,6 +243,7 @@
                 this.backendErrors = {}
             },
             ad(val) {
+                if (_.isEmpty(val)) return;
                 this.title = val.title;
                 this.description = val.description;
                 this.state = val.state;

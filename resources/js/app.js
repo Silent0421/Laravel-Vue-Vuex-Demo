@@ -6,6 +6,7 @@
 
 import './bootstrap';
 import Vue from 'vue';
+import Vuex from 'vuex';
 import MainComponent from './components/MainComponent';
 import VueRouter from 'vue-router';
 import LoginComponent from './components/Login';
@@ -57,7 +58,7 @@ const router = new VueRouter({
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(vModal);
 Vue.use(VueMaterial);

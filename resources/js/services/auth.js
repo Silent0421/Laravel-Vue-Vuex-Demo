@@ -89,7 +89,7 @@ class Auth {
 
     logout() {
         return new Promise((resolve, reject) => {
-            window.axios.post('/api/auth/logout').then((res) => {
+            Api.call('/api/auth/logout', 'post').then((res) => {
                 localStorage.clear();
                 location.reload();
                 EventBus.$emit('logout:success', res.data.user);

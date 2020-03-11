@@ -23,7 +23,7 @@
                 <md-button class="md-icon-button">
                     <md-icon class="md-primary">logout</md-icon>
                 </md-button>
-                <span class="md-list-item-text" @click="logout($event)"><a>Logout</a></span>
+                <span class="md-list-item-text logout-pointer" @click="logout($event)"><a>Logout</a></span>
             </md-list-item>
         </md-list>
     </md-drawer>
@@ -52,12 +52,15 @@
                 e.preventDefault();
                 e.stopPropagation();
                 auth.logout();
+
                 this.$router.push('/welcome')
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+    .logout-pointer {
+        cursor: pointer;
+    }
 </style>
