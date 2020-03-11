@@ -61,6 +61,7 @@
             this.ads.length === 0 ? this.showEmpty = true : this.showEmpty = false
         },
         async mounted() {
+            console.log(this.$store)
             try {
                 const user = await Auth.getUser();
                 this.ads = (this.type === 'Home') ?
